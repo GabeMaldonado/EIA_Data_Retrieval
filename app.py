@@ -12,10 +12,10 @@ def retrieve_data(api_key, selected_option):
     url_hist = f"https://api.eia.gov/v2/electricity/retail-sales/data/?frequency=annual&data[0]=price&facets[stateid][]=RI&facets[sectorid][]=ALL&facets[sectorid][]=COM&facets[sectorid][]=IND&facets[sectorid][]=RES&start=2001&end=2023&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=5000&api_key={api_key}"
     
     # select the URL
-    if selected_option == "Historical Data":
+    if selected_option == "Historical Price Data":
         url = url_hist
         filename_suffix = "Historical_"
-    elif selected_option == "Forecasted Data":
+    elif selected_option == "Forecasted Price Data":
         url = url_fore
         filename_suffix = "Forecasted_"
     else:
@@ -41,7 +41,7 @@ def retrieve_data(api_key, selected_option):
     return data, filename_suffix#df_pivoted
 
 def process_eia_data(data, selected_option):
-    if selected_option == "Historical Data":
+    if selected_option == "Historical Price Data":
         # convert series to a pandas dataframe
         df = pd.DataFrame(data)
         df['price'] = df['price'].astype(float)
@@ -49,7 +49,7 @@ def process_eia_data(data, selected_option):
         df_piv.reset_index(inplace=True)
         df_piv.rename(columns={"period":"year"}, inplace=True)
         st.subheader("Final dataset to be downloaded:")
-    elif selected_option == "Forecasted Data":
+    elif selected_option == "Forecasted Price Data":
          # convert series to a pandas dataframe
          df = pd.DataFrame(data)
          df['value'] = df['value'].astype(float)
@@ -68,7 +68,7 @@ def main():
     api_key = st.text_input("Enter the API key:")
 
     # select variable
-    selected_option = st.selectbox("Select data to retrieve:", ["Historical Data", "Forecasted Data"])
+    selected_option = st.selectbox("Select data to retrieve:", ["Historical Price Data", "Forecasted Price Data"])
 
     # retreive data on click
     if st.button("Retrieve Data"):

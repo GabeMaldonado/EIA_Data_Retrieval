@@ -4,6 +4,9 @@ import requests
 import os
 import json
 
+# upload company logo
+logo_path = r"C:/Users/307907/OneDrive - PPL Corporation/Desktop/Images/Templates/OnePPLLogo.JPG"
+st.image("OnePPLLogo.JPG", use_column_width="auto")
 
 def retrieve_data(api_key, selected_option):
 
@@ -48,7 +51,7 @@ def process_eia_data(data, selected_option):
         df_piv = df.pivot_table(index='period', columns='sectorName', values='price')
         df_piv.reset_index(inplace=True)
         df_piv.rename(columns={"period":"year"}, inplace=True)
-        df_piv.sort_values(by='year', ascending=False, inplace=True)
+        df_piv = df_piv.sort_values(by='year', ascending=False)
         st.subheader("Final dataset to be downloaded:")
     elif selected_option == "Forecasted Price Data":
          # convert series to a pandas dataframe
@@ -78,7 +81,7 @@ def main():
              
 
             if data is not None:
-                data
+                
                 df = process_eia_data(data, selected_option)
                 st.dataframe(df)
     else:

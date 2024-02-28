@@ -48,7 +48,7 @@ def process_eia_data(data, selected_option):
         df_piv = df.pivot_table(index='period', columns='sectorName', values='price')
         df_piv.reset_index(inplace=True)
         df_piv.rename(columns={"period":"year"}, inplace=True)
-        df_piv.sort_values(by='year', ascending=False)
+        df_piv.sort_values(by='year', ascending=False, inplace=True)
         st.subheader("Final dataset to be downloaded:")
     elif selected_option == "Forecasted Price Data":
          # convert series to a pandas dataframe

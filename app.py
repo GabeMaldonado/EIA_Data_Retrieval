@@ -5,8 +5,8 @@ import os
 import json
 
 # upload company logo
-logo_path = r"C:/Users/307907/OneDrive - PPL Corporation/Desktop/Images/Templates/OnePPLLogo.JPG"
-st.image("OnePPLLogo.JPG", use_column_width="auto")
+
+st.image("OnePPLLogo.JPG", use_column_width=True)
 
 def retrieve_data(api_key, selected_option):
 
